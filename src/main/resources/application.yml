@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydatabase?serverTimezone=Asia/Seoul&character
+    username: root
+    password: tjddnr12
+  thymeleaf:
+    cache: false
+
+  # spring data jpa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create
