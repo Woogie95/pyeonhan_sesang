@@ -1,13 +1,40 @@
 package com.practice.pyeonhan_sesang.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.practice.pyeonhan_sesang.dto.request.DiaryRequest;
+import com.practice.pyeonhan_sesang.dto.response.DiaryResponse;
+import com.practice.pyeonhan_sesang.service.DiaryService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("/diary")
+@AllArgsConstructor
 public class DiaryController {
 
-    @GetMapping("/diary")
-    public String diaryController() {
-        return "diary";
+    private final DiaryService diaryService;
+
+    // 등록
+    @PostMapping("/insert")
+    public DiaryResponse insertDiary(@RequestBody DiaryRequest diaryRequest) {
+        return diaryService.insertDiary(diaryRequest);
+    }
+
+    // 전체 조회
+//    @GetMapping("/Diaries")
+//    public List<DiaryResponse> getAllDiaries() {
+//        return diaryService.getAllDiaries();
+//    }
+
+    // 상세조회
+
+    // 수정
+
+    // 삭제
+    @DeleteMapping("/Diaries/{id}")
+    public void deleteDiary(@PathVariable Long id) {
+
     }
 }
+
