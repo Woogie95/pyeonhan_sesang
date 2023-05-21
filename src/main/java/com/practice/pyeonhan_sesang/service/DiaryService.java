@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class DiaryService {
@@ -19,6 +21,10 @@ public class DiaryService {
         return DiaryResponse.from(diaryRepository.save(diaryRequest.toEntity()));
     }
 
+    public List<DiaryResponse> getAllDiaries() {
+        List<Diary> diaries = diaryRepository.findAll();
+        return DiaryResponse.fromList(diaries);
+    }
 
 
 }

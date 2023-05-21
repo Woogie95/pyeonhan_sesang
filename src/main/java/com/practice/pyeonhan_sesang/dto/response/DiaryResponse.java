@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +36,14 @@ public class DiaryResponse {
                 diary.getWeather(),
                 diary.getCreated_at()
         );
+    }
+
+    public static List<DiaryResponse> fromList(List<Diary> diaries) {
+        List<DiaryResponse> responses = new ArrayList<>();
+        for (Diary diary : diaries) {
+            responses.add(from(diary));
+        }
+        return responses;
     }
 
 }

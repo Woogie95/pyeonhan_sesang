@@ -22,9 +22,9 @@ public class DiaryRequest {
     public Diary toEntity() {
         return Diary.builder()
                 .author(this.author)
-                .title(this.author)
-                .content(this.title)
-                .weather(this.content)
+                .title(this.title)
+                .content(this.content)
+                .weather(this.weather)
                 .created_at(LocalDateTime.now())
                 .build();
     }

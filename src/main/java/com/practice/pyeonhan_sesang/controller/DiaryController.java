@@ -22,12 +22,16 @@ public class DiaryController {
     }
 
     // 전체 조회
-//    @GetMapping("/Diaries")
-//    public List<DiaryResponse> getAllDiaries() {
-//        return diaryService.getAllDiaries();
-//    }
+    @GetMapping("/diaries")
+    public List<DiaryResponse> getAllDiaries() {
+        return diaryService.getAllDiaries();
+    }
 
-    // 상세조회
+//    // 상세조회
+//    @GetMapping("/diaries/{id}")
+//    public DiaryResponse getDiary(@PathVariable Long id) {
+//
+//    }
 
     // 수정
 
