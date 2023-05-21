@@ -5,10 +5,12 @@ import com.practice.pyeonhan_sesang.dto.response.DiaryResponse;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import com.practice.pyeonhan_sesang.repository.DiaryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +26,16 @@ public class DiaryService {
     public List<DiaryResponse> getAllDiaries() {
         List<Diary> diaries = diaryRepository.findAll();
         return DiaryResponse.fromList(diaries);
+    }
+
+    public DiaryResponse getDiary(Long id) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(id);
+        if (optionalDiary.isPresent()) {
+            Diary diary = optionalDiary.get();
+            return DiaryResponse.from(diary);
+        } else {
+            return null;
+        }
     }
 
 

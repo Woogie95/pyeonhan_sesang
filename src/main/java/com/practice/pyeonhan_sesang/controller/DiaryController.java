@@ -27,11 +27,11 @@ public class DiaryController {
         return diaryService.getAllDiaries();
     }
 
-//    // 상세조회
-//    @GetMapping("/diaries/{id}")
-//    public DiaryResponse getDiary(@PathVariable Long id) {
-//
-//    }
+    // 상세조회
+    @GetMapping("/diaries/{id}")
+    public DiaryResponse getDiary(@PathVariable Long id) {
+        return diaryService.getDiary(id);
+    }
 
     // 수정
 
