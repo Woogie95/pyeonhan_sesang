@@ -1,6 +1,5 @@
 package com.practice.pyeonhan_sesang.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class DiaryRequest {
+public class DiaryTotalInquiryRequest {
 
     private String author;
     private String title;

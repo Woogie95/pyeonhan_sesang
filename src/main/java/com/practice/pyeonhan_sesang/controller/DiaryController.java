@@ -1,9 +1,12 @@
 package com.practice.pyeonhan_sesang.controller;
 
-import com.practice.pyeonhan_sesang.dto.request.DiaryRequest;
-import com.practice.pyeonhan_sesang.dto.response.DiaryResponse;
+import com.practice.pyeonhan_sesang.dto.request.DiaryInsertRequest;
+import com.practice.pyeonhan_sesang.dto.request.DiaryUpdateRequest;
+import com.practice.pyeonhan_sesang.dto.response.DiaryInsertResponse;
+import com.practice.pyeonhan_sesang.dto.response.DiaryUpdateResponse;
 import com.practice.pyeonhan_sesang.service.DiaryService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,28 +20,34 @@ public class DiaryController {
 
     // 등록
     @PostMapping("/insert")
-    public DiaryResponse insertDiary(@RequestBody DiaryRequest diaryRequest) {
-        return diaryService.insertDiary(diaryRequest);
+    public DiaryInsertResponse insertDiary(@RequestBody DiaryInsertRequest diaryInsertRequest) {
+        return diaryService.insertDiary(diaryInsertRequest);
     }
 
     // 전체 조회
     @GetMapping("/diaries")
-    public List<DiaryResponse> getAllDiaries() {
+    public List<DiaryInsertResponse> getAllDiaries() {
         return diaryService.getAllDiaries();
     }
 
     // 상세조회
     @GetMapping("/diaries/{id}")
-    public DiaryResponse getDiary(@PathVariable Long id) {
+    public DiaryInsertResponse getDiary(@PathVariable Long id) {
         return diaryService.getDiary(id);
     }
 
     // 수정
+    @PutMapping("/{id}")
+    public DiaryUpdateResponse updateDiary(@PathVariable Long id, @RequestBody DiaryUpdateRequest diaryUpdateRequest) throws ChangeSetPersister.NotFoundException {
+        return diaryService.updateDiary(id, diaryUpdateRequest);
+    }
+
 
     // 삭제
-    @DeleteMapping("/Diaries/{id}")
+    @DeleteMapping("/{id}")
     public void deleteDiary(@PathVariable Long id) {
-
+        diaryService.deleteDiary(id);
     }
+
 }
 
