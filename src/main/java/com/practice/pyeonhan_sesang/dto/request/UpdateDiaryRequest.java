@@ -10,21 +10,19 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class DiaryTotalInquiryRequest {
+public class UpdateDiaryRequest {
 
-    private String author;
     private String title;
     private String content;
     private String weather;
-    private LocalDateTime created_at;
+    private String updated_at;
 
     public Diary toEntity() {
         return Diary.builder()
-                .author(this.author)
                 .title(this.title)
                 .content(this.content)
                 .weather(this.weather)
-                .created_at(LocalDateTime.now())
+                .updated_at(LocalDateTime.now())
                 .build();
     }
 

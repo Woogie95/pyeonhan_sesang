@@ -6,13 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class DiaryInsertResponse {
+public class CreateDiaryResponse {
 
     private Long id;
     private String author;
@@ -20,24 +18,18 @@ public class DiaryInsertResponse {
     private String content;
     private String weather;
     private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
-    public static DiaryInsertResponse from(Diary diary) {
-        return new DiaryInsertResponse(
+    public static CreateDiaryResponse from(Diary diary) {
+        return new CreateDiaryResponse(
                 diary.getId(),
                 diary.getAuthor(),
                 diary.getTitle(),
                 diary.getContent(),
                 diary.getWeather(),
-                diary.getCreated_at()
+                diary.getCreated_at(),
+                diary.getUpdated_at()
         );
-    }
-
-    public static List<DiaryInsertResponse> fromList(List<Diary> diaries) {
-        List<DiaryInsertResponse> responses = new ArrayList<>();
-        for (Diary diary : diaries) {
-            responses.add(from(diary));
-        }
-        return responses;
     }
 
 }

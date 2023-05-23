@@ -1,9 +1,10 @@
 package com.practice.pyeonhan_sesang.service;
 
-import com.practice.pyeonhan_sesang.dto.request.DiaryInsertRequest;
-import com.practice.pyeonhan_sesang.dto.request.DiaryUpdateRequest;
-import com.practice.pyeonhan_sesang.dto.response.DiaryInsertResponse;
-import com.practice.pyeonhan_sesang.dto.response.DiaryUpdateResponse;
+import com.practice.pyeonhan_sesang.dto.request.CreateDiaryRequest;
+import com.practice.pyeonhan_sesang.dto.request.UpdateDiaryRequest;
+import com.practice.pyeonhan_sesang.dto.response.DiaryResponse;
+import com.practice.pyeonhan_sesang.dto.response.CreateDiaryResponse;
+import com.practice.pyeonhan_sesang.dto.response.UpdateDiaryResponse;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import com.practice.pyeonhan_sesang.repository.DiaryRepository;
 import lombok.AllArgsConstructor;
@@ -21,43 +22,49 @@ public class DiaryService {
     private DiaryRepository diaryRepository;
 
     @Transactional
-    public DiaryInsertResponse insertDiary(DiaryInsertRequest diaryInsertRequest) {
-        return DiaryInsertResponse.from(diaryRepository.save(diaryInsertRequest.toEntity()));
+    public CreateDiaryResponse createDiary(CreateDiaryRequest createDiaryRequest) {
+        return CreateDiaryResponse.from(diaryRepository.save(createDiaryRequest.toEntity()));
     }
 
-    public List<DiaryInsertResponse> getAllDiaries() {
+    @Transactional
+    public List<DiaryResponse> getAllDiaries() {
         List<Diary> diaries = diaryRepository.findAll();
-        return DiaryInsertResponse.fromList(diaries);
+        return DiaryResponse.fromList(diaries);
     }
 
-    public DiaryInsertResponse getDiary(Long id) {
+    @Transactional
+    public DiaryResponse getDetailDiary(Long id) {
         Optional<Diary> optionalDiary = diaryRepository.findById(id);
         if (optionalDiary.isPresent()) {
             Diary diary = optionalDiary.get();
-            return DiaryInsertResponse.from(diary);
+            return DiaryResponse.from(diary);
         } else {
             return null;
         }
     }
 
     @Transactional
-    public DiaryUpdateResponse updateDiary(Long id, DiaryUpdateRequest diaryUpdateRequest) throws ChangeSetPersister.NotFoundException {
+    public UpdateDiaryResponse updateDiary(Long id, UpdateDiaryRequest updateDiaryRequest) throws ChangeSetPersister.NotFoundException {
         Diary diary = diaryRepository.findById(id)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
-        diary.setId(diaryUpdateRequest.getId());
-        diary.setAuthor(diaryUpdateRequest.getAuthor());
-        diary.setTitle(diaryUpdateRequest.getTitle());
-        diary.setContent(diaryUpdateRequest.getContent());
-        diary.setWeather(diaryUpdateRequest.getWeather());
-        diary.setCreated_at(diaryUpdateRequest.getCreated_at());
-        diary.setUpdated_at(diaryUpdateRequest.getUpdated_at());
+        if (updateDiaryRequest.getTitle() != null) {
+            diary.setTitle(updateDiaryRequest.getTitle());
+        }
+        if (updateDiaryRequest.getContent() != null) {
+            diary.setContent(updateDiaryRequest.getContent());
+        }
+        if (updateDiaryRequest.getWeather() != null) {
+            diary.setWeather(updateDiaryRequest.getWeather());
+        }
 
-        return DiaryUpdateResponse.from(diaryRepository.save(diaryUpdateRequest.toEntity()));
+        diary.setUpdated_at(updateDiaryRequest.toEntity().getUpdated_at());
+        return UpdateDiaryResponse.from(diaryRepository.save(diary));
     }
+
 
     @Transactional
     public void deleteDiary(Long id) {
-        diaryRepository.findById(id);
+        diaryRepository.deleteById(id);
     }
 
 }
