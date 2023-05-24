@@ -26,13 +26,11 @@ public class DiaryService {
         return CreateDiaryResponse.from(diaryRepository.save(createDiaryRequest.toEntity()));
     }
 
-    @Transactional
     public List<DiaryResponse> getAllDiaries() {
         List<Diary> diaries = diaryRepository.findAll();
         return DiaryResponse.fromList(diaries);
     }
 
-    @Transactional
     public DiaryResponse getDetailDiary(Long id) {
         Optional<Diary> optionalDiary = diaryRepository.findById(id);
         if (optionalDiary.isPresent()) {
