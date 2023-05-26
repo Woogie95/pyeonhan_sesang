@@ -2,17 +2,14 @@ package com.practice.pyeonhan_sesang.dto.request;
 
 import com.practice.pyeonhan_sesang.entity.Diary;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateDiaryRequest {
 
     @NotNull(message = "이름은 null 일 수 없습니다.")

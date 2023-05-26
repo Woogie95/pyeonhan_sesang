@@ -3,12 +3,10 @@ package com.practice.pyeonhan_sesang.dto.response;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class CreateDiaryResponse {
 
