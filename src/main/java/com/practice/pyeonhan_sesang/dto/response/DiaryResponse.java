@@ -3,6 +3,7 @@ package com.practice.pyeonhan_sesang.dto.response;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DiaryResponse {
 
     private Long id;
