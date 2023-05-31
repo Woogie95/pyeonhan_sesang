@@ -26,12 +26,12 @@ public class DiaryService {
         return CreateDiaryResponse.from(diaryRepository.save(createDiaryRequest.toEntity()));
     }
 
-    public List<DiaryResponse> getAllDiaries() {
+    public List<DiaryResponse> findAll() {
         List<Diary> diaries = diaryRepository.findAll();
         return DiaryResponse.fromList(diaries);
     }
 
-    public DiaryResponse getDetailDiary(Long id) {
+    public DiaryResponse findById(Long id) {
         Optional<Diary> optionalDiary = diaryRepository.findById(id);
         if (optionalDiary.isPresent()) {
             Diary diary = optionalDiary.get();
@@ -45,24 +45,24 @@ public class DiaryService {
     public UpdateDiaryResponse updateDiary(Long id, UpdateDiaryRequest updateDiaryRequest) throws ChangeSetPersister.NotFoundException {
         Diary diary = diaryRepository.findById(id)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
-        if (updateDiaryRequest.getTitle() != null) {
-            diary.setTitle(updateDiaryRequest.getTitle());
-        }
-        if (updateDiaryRequest.getContent() != null) {
-            diary.setContent(updateDiaryRequest.getContent());
-        }
-        if (updateDiaryRequest.getWeather() != null) {
-            diary.setWeather(updateDiaryRequest.getWeather());
-        }
-
+        Optional.ofNullable(updateDiaryRequest.getTitle())
+                .ifPresent(diary::setTitle);
+        Optional.ofNullable(updateDiaryRequest.getContent())
+                .ifPresent(diary::setContent);
+        Optional.ofNullable(updateDiaryRequest.getWeather())
+                .ifPresent(diary::setWeather);
         diary.setUpdated_at(updateDiaryRequest.toEntity().getUpdated_at());
         return UpdateDiaryResponse.from(diaryRepository.save(diary));
     }
 
-
     @Transactional
-    public void deleteDiary(Long id) {
-        diaryRepository.deleteById(id);
-    }
+    public boolean deleteDiary(Long id) {
+            try {
+                diaryRepository.deleteById(id);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
 }

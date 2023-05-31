@@ -46,7 +46,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("글 등록 테스트")
+    @DisplayName("글 등록")
     void createDiary() throws Exception {
         // given
         CreateDiaryRequest createDiaryRequest = new CreateDiaryRequest("최성욱", "인삿말", "안녕하세요.",
@@ -72,44 +72,44 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("글 전체 조회 테스트")
+    @DisplayName("글 전체 조회")
     void getAllDiaries() throws Exception {
         // given
-        List<DiaryResponse> diaryList = List.of(
+        List<DiaryResponse> diaries = List.of(
                 new DiaryResponse(1L, "최성욱", "제목1", "내용1", "날씨1", LocalDateTime.now(), LocalDateTime.now()),
                 new DiaryResponse(2L, "홍길동", "제목2", "내용2", "날씨2", LocalDateTime.now(), LocalDateTime.now())
         );
-        given(diaryService.getAllDiaries()).willReturn(diaryList);
+        given(diaryService.findAll()).willReturn(diaries);
 
         // when & then
         mockMvc.perform(get("/diaries"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.length()").value(diaryList.size()))
-                .andExpect(jsonPath("$[0].id").value(diaryList.get(0).getId()))
-                .andExpect(jsonPath("$[0].author").value(diaryList.get(0).getAuthor()))
-                .andExpect(jsonPath("$[0].title").value(diaryList.get(0).getTitle()))
-                .andExpect(jsonPath("$[0].content").value(diaryList.get(0).getContent()))
-                .andExpect(jsonPath("$[0].weather").value(diaryList.get(0).getWeather()))
+                .andExpect(jsonPath("$.length()").value(diaries.size()))
+                .andExpect(jsonPath("$[0].id").value(diaries.get(0).getId()))
+                .andExpect(jsonPath("$[0].author").value(diaries.get(0).getAuthor()))
+                .andExpect(jsonPath("$[0].title").value(diaries.get(0).getTitle()))
+                .andExpect(jsonPath("$[0].content").value(diaries.get(0).getContent()))
+                .andExpect(jsonPath("$[0].weather").value(diaries.get(0).getWeather()))
                 .andExpect(jsonPath("$[0].created_at").exists())
                 .andExpect(jsonPath("$[0].updated_at").exists())
-                .andExpect(jsonPath("$[1].id").value(diaryList.get(1).getId()))
-                .andExpect(jsonPath("$[1].author").value(diaryList.get(1).getAuthor()))
-                .andExpect(jsonPath("$[1].title").value(diaryList.get(1).getTitle()))
-                .andExpect(jsonPath("$[1].content").value(diaryList.get(1).getContent()))
-                .andExpect(jsonPath("$[1].weather").value(diaryList.get(1).getWeather()))
+                .andExpect(jsonPath("$[1].id").value(diaries.get(1).getId()))
+                .andExpect(jsonPath("$[1].author").value(diaries.get(1).getAuthor()))
+                .andExpect(jsonPath("$[1].title").value(diaries.get(1).getTitle()))
+                .andExpect(jsonPath("$[1].content").value(diaries.get(1).getContent()))
+                .andExpect(jsonPath("$[1].weather").value(diaries.get(1).getWeather()))
                 .andExpect(jsonPath("$[1].created_at").exists())
                 .andExpect(jsonPath("$[1].updated_at").exists())
                 .andDo(print());
     }
 
     @Test
-    @DisplayName("글 상세 조회 테스트")
+    @DisplayName("글 상세 조회")
     void getDiaryDetail() throws Exception {
         // given
         Long diaryId = 1L;
         DiaryResponse diaryResponse = new DiaryResponse(1L, "최성욱", "제목", "내용", "날씨", LocalDateTime.now(), LocalDateTime.now());
-        given(diaryService.getDetailDiary(diaryId)).willReturn(diaryResponse);
+        given(diaryService.findById(diaryId)).willReturn(diaryResponse);
 
         // when & then
         mockMvc.perform(get("/diaries/{id}", diaryId))
@@ -125,7 +125,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("전체 수정 테스트")
+    @DisplayName("전체 수정")
     void updateDiary() throws Exception {
         // given
         Long diaryId = 1L;
@@ -151,7 +151,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("제목 수정 테스트")
+    @DisplayName("제목 수정")
     void updateTitleDiary() throws Exception {
         // given
         Long diaryId = 1L;
@@ -177,7 +177,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("내용 수정 테스트")
+    @DisplayName("내용 수정")
     void updateContentDiary() throws Exception {
         // given
         Long diaryId = 2L;
@@ -203,7 +203,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("날씨 수정 테스트")
+    @DisplayName("날씨 수정")
     void updateWeatherDiary() throws Exception {
         // given
         Long diaryId = 3L;
@@ -229,7 +229,7 @@ class DiaryControllerTest {
     }
 
     @Test
-    @DisplayName("글 삭제 테스트")
+    @DisplayName("글 삭제")
     void deleteDiary() throws Exception {
         // given
         Long diaryId = 1L;

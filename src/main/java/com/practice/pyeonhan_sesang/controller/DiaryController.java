@@ -28,13 +28,13 @@ public class DiaryController {
     // 전체 조회
     @GetMapping()
     public List<DiaryResponse> getAllDiaries() {
-        return diaryService.getAllDiaries();
+        return diaryService.findAll();
     }
 
     // 상세조회
     @GetMapping("/{id}")
     public DiaryResponse getDiaryDetail(@PathVariable Long id) {
-        return diaryService.getDetailDiary(id);
+        return diaryService.findById(id);
     }
 
     // 수정
@@ -45,8 +45,8 @@ public class DiaryController {
 
     // 삭제
     @DeleteMapping("/{id}")
-    public void deleteDiary(@PathVariable Long id) {
-        diaryService.deleteDiary(id);
+    public boolean deleteDiary(@PathVariable Long id) {
+        return diaryService.deleteDiary(id);
     }
 
 }
