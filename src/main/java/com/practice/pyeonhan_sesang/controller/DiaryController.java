@@ -45,7 +45,7 @@ public class DiaryController {
 
     // 삭제
     @DeleteMapping("/{id}")
-    public boolean deleteDiary(@PathVariable Long id) {
+    public boolean deleteDiary(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return diaryService.deleteDiary(id);
     }
 

@@ -24,7 +24,9 @@ import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
 class DiaryServiceTest {
@@ -167,16 +169,16 @@ class DiaryServiceTest {
 
     @Test
     @DisplayName("글 삭제")
-    void deleteDiary() {
+    void deleteDiary() throws ChangeSetPersister.NotFoundException {
         // given
         Long id = new Random().nextLong(Long.MAX_VALUE) + 1;
-        boolean isTrue = true;
+        given(diaryRepository.findById(anyLong())).willReturn(Optional.of(Diary.builder().build()));
+        doNothing().when(diaryRepository).delete(any());
 
         // when
         boolean isDelete = diaryService.deleteDiary(id);
 
         // then
-        assertThat(isDelete).isEqualTo(isTrue);
+        assertThat(isDelete).isTrue();
     }
-
 }

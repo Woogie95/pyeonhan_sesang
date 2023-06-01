@@ -56,13 +56,10 @@ public class DiaryService {
     }
 
     @Transactional
-    public boolean deleteDiary(Long id) {
-            try {
-                diaryRepository.deleteById(id);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
+    public boolean deleteDiary(Long id) throws ChangeSetPersister.NotFoundException {
+        Diary diary = diaryRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        diaryRepository.delete(diary);
+        return true;
+    }
 
 }
