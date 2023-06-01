@@ -34,5 +34,8 @@ public class Diary {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updated_at;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
