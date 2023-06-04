@@ -27,13 +27,13 @@ public class DiaryController {
 
     // 전체 조회
     @GetMapping()
-    public List<DiaryResponse> getAllDiaries() {
+    public List<DiaryResponse> findAllDiaries() {
         return diaryService.findAll();
     }
 
     // 상세조회
     @GetMapping("/{id}")
-    public DiaryResponse getDiaryDetail(@PathVariable Long id) {
+    public DiaryResponse findByIdDiary(@PathVariable Long id) {
         return diaryService.findById(id);
     }
 
