@@ -26,7 +26,7 @@ public class UserResponse {
 
     public static UserResponse from(User user) {
         return new UserResponse(
-                user.getUser_id(),
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),

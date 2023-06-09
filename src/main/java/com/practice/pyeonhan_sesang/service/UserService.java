@@ -3,20 +3,17 @@ package com.practice.pyeonhan_sesang.service;
 import com.practice.pyeonhan_sesang.dto.request.CreateUserRequest;
 import com.practice.pyeonhan_sesang.dto.request.UpdateDiaryRequest;
 import com.practice.pyeonhan_sesang.dto.request.UpdateUserRequest;
-import com.practice.pyeonhan_sesang.dto.response.CreateUserResponse;
-import com.practice.pyeonhan_sesang.dto.response.UpdateDiaryResponse;
-import com.practice.pyeonhan_sesang.dto.response.UpdateUserResponse;
-import com.practice.pyeonhan_sesang.dto.response.UserResponse;
+import com.practice.pyeonhan_sesang.dto.response.*;
 import com.practice.pyeonhan_sesang.entity.Diary;
 import com.practice.pyeonhan_sesang.entity.User;
+import com.practice.pyeonhan_sesang.repository.DiaryRepository;
 import com.practice.pyeonhan_sesang.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +21,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final DiaryRepository diaryRepository;
 
     // 회원 등록
     @Transactional
@@ -50,6 +48,24 @@ public class UserService {
         }
     }
 
+    // 회원 게시글 조회
+    public List<DiaryResponse> findByUserIdAllDiaries(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<Diary> diaries = diaryRepository.findByAuthor(user.getName());
+
+            List<DiaryResponse> diaryResponses = new ArrayList<>();
+            for (Diary diary : diaries) {
+                DiaryResponse diaryResponse = DiaryResponse.from(diary);
+                diaryResponses.add(diaryResponse);
+            }
+            return diaryResponses;
+        }
+        return Collections.emptyList();
+    }
+
+    // 회원 수정
     @Transactional
     public UpdateUserResponse updateUser(Long id, UpdateUserRequest updateUserRequest) throws ChangeSetPersister.NotFoundException {
         User user = userRepository.findById(id)
@@ -64,6 +80,7 @@ public class UserService {
         return UpdateUserResponse.from(userRepository.save(user));
     }
 
+    // 회원 삭제
     @Transactional
     public boolean deleteUser(Long id) throws ChangeSetPersister.NotFoundException {
         User user = userRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);

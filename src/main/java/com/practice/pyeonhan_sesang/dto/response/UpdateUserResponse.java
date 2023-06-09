@@ -22,7 +22,7 @@ public class UpdateUserResponse {
 
     public static UpdateUserResponse from(User user) {
         return new UpdateUserResponse(
-                user.getUser_id(),
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),

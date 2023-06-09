@@ -35,6 +35,12 @@ public class UserController {
         return userService.findById(id);
     }
 
+    // 회원글 조회
+    @GetMapping("/{id}/diaries")
+    public List<DiaryResponse> findAllUserDiaries(@PathVariable Long id) {
+        return userService.findByUserIdAllDiaries(id);
+    }
+
     // 수정
     @PutMapping("/{id}")
     public UpdateUserResponse updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest updateUserRequest) throws ChangeSetPersister.NotFoundException {
@@ -46,4 +52,6 @@ public class UserController {
     public boolean deleteUser(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return userService.deleteUser(id);
     }
+
+
 }

@@ -24,7 +24,7 @@ public class CreateUserResponse {
 
     public static CreateUserResponse from(User user) {
         return new CreateUserResponse(
-                user.getUser_id(),
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
