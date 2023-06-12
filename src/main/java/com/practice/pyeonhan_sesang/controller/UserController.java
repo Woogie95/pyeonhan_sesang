@@ -29,7 +29,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    // 상세 조회
+    // 회원 상세 조회
     @GetMapping("/{id}")
     public UserResponse findById(@PathVariable Long id) {
         return userService.findById(id);
@@ -41,7 +41,7 @@ public class UserController {
         return userService.findByUserIdAllDiaries(id);
     }
 
-    // 수정
+    // 회원 수정
     @PutMapping("/{id}")
     public UpdateUserResponse updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest updateUserRequest) throws ChangeSetPersister.NotFoundException {
         return userService.updateUser(id, updateUserRequest);
